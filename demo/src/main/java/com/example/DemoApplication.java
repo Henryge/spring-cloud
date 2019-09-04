@@ -1,13 +1,11 @@
-package com.example.demo;
+package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.ComponentScan;
 
-@EnableEurekaClient
+//@EnableEurekaClient
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.example.*"})
+//@ComponentScan(basePackages = {"com.example.*"})
 public class DemoApplication {
 
 	public static void main(String[] args) {
