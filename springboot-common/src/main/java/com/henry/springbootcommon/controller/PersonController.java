@@ -23,7 +23,9 @@ public class PersonController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Person> getAll() {
-        redisUtil.set((Object)"name", "henry");
+        redisUtil.set("name", "henry");
+        System.out.println(redisUtil.get("name"));
+        redisUtil.setString("hello", "world");
         return personService.getAll();
     }
 
