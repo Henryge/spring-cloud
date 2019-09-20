@@ -29,7 +29,7 @@ public class PersonController {
         List<Person> allPerson = personService.getAll();
         redisUtil.set("allPerson", allPerson);
         redisUtil.setString("loadFlag", "1");
-        List<Person> personList = (List<Person>)redisUtil.get("name");
+        List<Person> personList = (List<Person>)redisUtil.get("allPerson");
         logger.info("Load " + personList.size() + " persons form the redis. And the the first name is " + personList.get(0).getName());
         logger.info("Load Flag is " + redisUtil.getString("loadFlag"));
         return allPerson;
