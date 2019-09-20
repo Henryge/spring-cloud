@@ -28,6 +28,14 @@ public class RedisUtil {
         }
     }
 
+    public String getString(String key) {
+        try {
+            return stringRedisTemplate.opsForValue().get(key);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public boolean set(Object key,Object value) {
         try {
             redisTemplate.opsForValue().set(key, value);
