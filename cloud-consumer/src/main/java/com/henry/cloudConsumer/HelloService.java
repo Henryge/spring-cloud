@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +16,12 @@ public class HelloService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Value("${provider.url}")
+    String providerUrl;
+
+    @Value("${hello.path}")
+    String helloPath;
+
     @HystrixCommand(fallbackMethod = "helloFallback", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")
     })
@@ -24,7 +31,7 @@ public class HelloService {
 
         String result = "";
         try {
-            result = restTemplate.postForEntity("http://CLOUD-PROVIDER/demo/hello", postData, String.class).getBody();
+            result = restTemplate.postForEntity(providerUrl + helloPath, postData, String.class).getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
