@@ -1,4 +1,4 @@
-//package com.henry.springbootcommon.configuration;
+//package com.shie.idveri.configuration;
 //
 //import com.fasterxml.jackson.annotation.JsonAutoDetect;
 //import com.fasterxml.jackson.annotation.PropertyAccessor;

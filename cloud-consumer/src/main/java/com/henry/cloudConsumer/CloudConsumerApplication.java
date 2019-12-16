@@ -1,4 +1,4 @@
-package com.henry.ribbonconsumer;
+package com.henry.cloudConsumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableCircuitBreaker
 @EnableDiscoveryClient
 @SpringBootApplication
-public class RibbonConsumerApplication {
+public class CloudConsumerApplication {
 
 	@Bean
 	@LoadBalanced
@@ -20,7 +20,7 @@ public class RibbonConsumerApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(RibbonConsumerApplication.class, args);
+		SpringApplication.run(CloudConsumerApplication.class, args);
 	}
 
 }

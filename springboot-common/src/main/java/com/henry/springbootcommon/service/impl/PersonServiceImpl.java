@@ -1,8 +1,8 @@
-package com.henry.springbootcommon.service.impl;
+package com.shie.idveri.service.impl;
 
-import com.henry.springbootcommon.mapper.PersonMapper;
-import com.henry.springbootcommon.model.Person;
-import com.henry.springbootcommon.service.PersonService;
+import com.shie.idveri.mapper.PersonMapper;
+import com.shie.idveri.model.Person;
+import com.shie.idveri.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.henry.springbootcommon.mapper;
+package com.shie.idveri.mapper;
 
-import com.henry.springbootcommon.model.Person;
+import com.shie.idveri.model.Person;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

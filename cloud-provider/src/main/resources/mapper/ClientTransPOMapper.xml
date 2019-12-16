@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.ClientTransPOMapper" >
+  <resultMap id="BaseResultMap" type="com.example.model.ClientTransPO" >
+    <id column="trans_id" property="transId" jdbcType="BIGINT" />
+    <result column="trans_code" property="transCode" jdbcType="VARCHAR" />
+    <result column="trade_id" property="tradeId" jdbcType="VARCHAR" />
+    <result column="supp_trade_id" property="suppTradeId" jdbcType="VARCHAR" />
+    <result column="req_client_code" property="reqClientCode" jdbcType="VARCHAR" />
+    <result column="req_client_channel" property="reqClientChannel" jdbcType="VARCHAR" />
+    <result column="req_type" property="reqType" jdbcType="VARCHAR" />
+    <result column="req_bus_type" property="reqBusType" jdbcType="VARCHAR" />
+    <result column="req_format" property="reqFormat" jdbcType="VARCHAR" />
+    <result column="req_msg" property="reqMsg" jdbcType="VARCHAR" />
+    <result column="resp_format" property="respFormat" jdbcType="VARCHAR" />
+    <result column="resp_msg" property="respMsg" jdbcType="VARCHAR" />
+    <result column="return_status" property="returnStatus" jdbcType="CHAR" />
+    <result column="return_value" property="returnValue" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="selectByPK" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select trans_id,trade_id,supp_trade_id,trans_code,req_client_code,req_client_channel,req_type,req_bus_type,req_format,req_msg,resp_format,resp_msg,
+		   return_status,return_value,is_deleted,create_by,update_by,create_time,update_time
+    from t_client_trans
+    where trans_id = #{transId,jdbcType=BIGINT}
+  </select>
+  
+  
+  <!-- 保险公司手机三要素查询  -->
+  <select id="selectEntInfos" resultType="java.util.Map" parameterType="java.util.Map" >
+    select *
+    from t_client_trans 
+    where return_status = '0'
+    <if test=" '' != product and null != product" >
+    	and req_bus_type = #{product,jdbcType=VARCHAR}
+    </if>
+    <if test=" '' != entName and null != entName" >
+    	and req_client_code = #{entName,jdbcType=VARCHAR}
+    </if>
+    <if test=" '' != starDate and null != starDate" >
+    	and DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= #{starDate}
+    </if>
+    <if test=" '' != endDate and null != endDate" >
+    	and DATE_FORMAT(create_time, '%Y-%m-%d') &lt;= #{endDate}
+    </if>
+  </select>
+  
+  
+  <!-- 管理台-保险公司数据统计Sql -->
+  <select id="selectEntStatisticsInfos" resultType="java.util.Map" parameterType="java.util.Map" >
+    select ct.req_client_code as "reqClientCode",ct.req_bus_type as "reqBusType",
+				ct.return_status as "returnStatus",count(*) as "countNum"
+	from t_client_trans ct 
+	LEFT JOIN t_client_trans_list ctl 
+		ON ct.trans_id = ctl.client_trans_id
+	where ct.return_status = '0'
+		and ctl.fee_flg = '0' 
+    <if test=" '' != product and null != product" >
+    	and ct.req_bus_type = #{product,jdbcType=VARCHAR}
+    </if>
+    <if test=" '' != entName and null != entName" >
+    	and ct.req_client_code = #{entName,jdbcType=VARCHAR}
+    </if>
+    <if test=" '' != starDate and null != starDate" >
+    	and DATE_FORMAT(ct.create_time, '%Y-%m-%d') &gt;= #{starDate}
+    </if>
+    <if test=" '' != endDate and null != endDate" >
+    	and DATE_FORMAT(ct.create_time, '%Y-%m-%d') &lt;= #{endDate}
+    </if>
+    GROUP BY ct.req_client_code,ct.req_bus_type
+    ORDER BY ct.req_client_code,countNum 
+  </select>
+  
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="transId" parameterType="com.example.model.ClientTransPO">
+    insert into t_client_trans(trans_code,trade_id,supp_trade_id,req_client_code,req_client_channel,req_type,req_bus_type,req_format,req_msg,resp_format,resp_msg,
+		   return_status,return_value,is_deleted,create_by,update_by,create_time,update_time)
+    values (#{transCode,jdbcType=VARCHAR},#{tradeId,jdbcType=VARCHAR},#{suppTradeId,jdbcType=VARCHAR},#{reqClientCode,jdbcType=VARCHAR}
+   		   ,#{reqClientChannel,jdbcType=VARCHAR},#{reqType,jdbcType=VARCHAR},#{reqBusType,jdbcType=VARCHAR},#{reqFormat,jdbcType=VARCHAR}
+           ,#{reqMsg,jdbcType=VARCHAR},#{respFormat,jdbcType=VARCHAR},#{respFormat,jdbcType=VARCHAR},#{returnStatus,jdbcType=CHAR},#{returnValue,jdbcType=VARCHAR}
+           ,#{isDeleted,jdbcType=CHAR},#{createBy,jdbcType=VARCHAR},#{updateBy,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updateByPK" parameterType="com.example.model.ClientTransPO" >
+    update t_client_trans
+    set trans_code = #{transCode,jdbcType=VARCHAR},
+        trade_id = #{tradeId,jdbcType=VARCHAR},
+        supp_trade_id = #{suppTradeId,jdbcType=VARCHAR},
+    	req_client_code =  #{reqClientCode,jdbcType=VARCHAR}, 
+	    req_client_channel = #{reqClientChannel,jdbcType=VARCHAR}, 
+	    req_type = #{reqType,jdbcType=VARCHAR}, 
+	    req_bus_type = #{reqBusType,jdbcType=VARCHAR}, 
+	    req_format = #{reqFormat,jdbcType=VARCHAR}, 
+	    req_msg = #{reqMsg,jdbcType=VARCHAR}, 
+	    resp_format = #{respFormat,jdbcType=VARCHAR}, 
+	    resp_msg = #{respMsg,jdbcType=VARCHAR}, 
+	    return_status = #{returnStatus,jdbcType=CHAR}, 
+	    return_value = #{returnValue,jdbcType=VARCHAR}, 
+	    is_deleted = #{isDeleted,jdbcType=CHAR}, 
+	    create_by = #{createBy,jdbcType=VARCHAR}, 
+	    update_by = #{updateBy,jdbcType=VARCHAR}, 
+	    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+	    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where trans_id = #{transId,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByPK" parameterType="java.lang.Long" >
+    delete from t_client_trans
+    where trans_id = #{transId,jdbcType=BIGINT}
+  </delete>
+</mapper>

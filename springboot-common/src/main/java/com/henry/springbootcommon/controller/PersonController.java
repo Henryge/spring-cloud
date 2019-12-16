@@ -1,8 +1,8 @@
-package com.henry.springbootcommon.controller;
+package com.shie.idveri.controller;
 
-import com.henry.springbootcommon.model.Person;
-import com.henry.springbootcommon.service.PersonService;
-import com.henry.springbootcommon.util.RedisUtil;
+import com.shie.idveri.model.Person;
+import com.shie.idveri.service.PersonService;
+import com.shie.idveri.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

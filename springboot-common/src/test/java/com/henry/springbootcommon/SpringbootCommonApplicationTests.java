@@ -1,4 +1,4 @@
-package com.henry.springbootcommon;
+package com.shie.idveri;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

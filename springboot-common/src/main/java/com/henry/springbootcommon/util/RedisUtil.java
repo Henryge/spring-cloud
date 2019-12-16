@@ -1,9 +1,11 @@
-package com.henry.springbootcommon.util;
+package com.shie.idveri.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 @Component
 public class RedisUtil {
@@ -11,7 +13,7 @@ public class RedisUtil {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
 
     public RedisUtil(RedisTemplate redisTemplate) {

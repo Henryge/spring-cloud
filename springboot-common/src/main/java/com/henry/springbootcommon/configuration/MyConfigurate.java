@@ -1,7 +1,7 @@
-package com.henry.springbootcommon.configuration;
+package com.shie.idveri.configuration;
 
-import com.henry.springbootcommon.service.PersonService;
-import com.henry.springbootcommon.service.impl.PersonServiceImpl;
+import com.shie.idveri.service.PersonService;
+import com.shie.idveri.service.impl.PersonServiceImpl;
 
 //@Configuration
 public class MyConfigurate {

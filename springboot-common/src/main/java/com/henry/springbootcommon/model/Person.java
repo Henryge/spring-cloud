@@ -1,4 +1,4 @@
-package com.henry.springbootcommon.model;
+package com.shie.idveri.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

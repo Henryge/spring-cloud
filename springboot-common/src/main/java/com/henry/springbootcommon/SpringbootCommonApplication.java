@@ -1,4 +1,4 @@
-package com.henry.springbootcommon;
+package com.shie.idveri;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
